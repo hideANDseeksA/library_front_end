@@ -82,6 +82,11 @@ const data = {
           url: "/users",
           icon: Users,
         },
+            {
+          title: "Books",
+          url: "/books",
+          icon: Users,
+        },
       ],
     },
     {
@@ -199,11 +204,7 @@ const data = {
           url: "/faqs",
           icon: HelpCircle,
         },
-        {
-          title: "Pricing",
-          url: "/pricing",
-          icon: CreditCard,
-        },
+  
       ],
     },
   ],

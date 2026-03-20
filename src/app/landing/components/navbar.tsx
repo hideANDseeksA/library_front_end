@@ -131,12 +131,7 @@ export function LandingNavbar() {
               <Github className="h-5 w-5" />
             </a>
           </Button>
-          <Button variant="outline" asChild className="cursor-pointer">
-            <a href={getAppUrl("/dashboard")} target="_blank" rel="noopener noreferrer">
-              <LayoutDashboard className="h-4 w-4 mr-2" />
-              Dashboard
-            </a>
-          </Button>
+
           <Button variant="ghost" asChild className="cursor-pointer">
             <a href={getAppUrl("/auth/sign-in")}>Sign In</a>
           </Button>

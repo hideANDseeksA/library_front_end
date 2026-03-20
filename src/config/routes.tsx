@@ -13,6 +13,11 @@ const Users = lazy(() => import('@/app/users/page'))
 const FAQs = lazy(() => import('@/app/faqs/page'))
 const Pricing = lazy(() => import('@/app/pricing/page'))
 
+
+
+
+const Books = lazy(() => import('@/app/books/page'))
+
 // Auth pages
 const SignIn = lazy(() => import('@/app/auth/sign-in/page'))
 const SignIn2 = lazy(() => import('@/app/auth/sign-in-2/page'))
@@ -46,8 +51,7 @@ export interface RouteConfig {
 }
 
 export const routes: RouteConfig[] = [
-  // Default route - redirect to dashboard
-  // Use relative path "dashboard" instead of "/dashboard" for basename compatibility
+
   {
     path: "/",
     element: <Navigate to="dashboard" replace />
@@ -58,7 +62,10 @@ export const routes: RouteConfig[] = [
     path: "/landing",
     element: <Landing />
   },
-
+ {
+    path: "/books",
+    element: <Books />
+  },
   // Dashboard Routes
   {
     path: "/dashboard",
