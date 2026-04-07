@@ -23,7 +23,6 @@ import {
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -50,7 +49,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import type { Paper } from "@/app/research_repository/components/paper"
-import { getDeptTheme, DEPARTMENT_THEMES } from "@/app/research_repository/components/departmentThemes"
+import { getDeptTheme} from "@/app/research_repository/components/departmentThemes"
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
@@ -84,7 +83,7 @@ interface DataTableProps {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const DEPARTMENTS = Object.keys(DEPARTMENT_THEMES)
+
 
 // ─── Component ────────────────────────────────────────────────────────────────
 

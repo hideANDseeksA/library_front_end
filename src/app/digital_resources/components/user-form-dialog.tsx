@@ -187,12 +187,6 @@ export function DigitalFormDialog({
 const resolvedDefaults = useMemo(() => {
   if (mode === "create") return EMPTY_DEFAULTS
 
-  const getCategoryLabel = (value: any) => {
-    const match = categoryOptions.find(
-      (c) => String(c.value) === String(value)
-    )
-    return match ? match.label : value
-  }
 
   return {
     ...EMPTY_DEFAULTS,

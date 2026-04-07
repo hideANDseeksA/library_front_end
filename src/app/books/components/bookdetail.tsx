@@ -3,7 +3,7 @@
 import { useState } from "react"
 import {
   ArrowLeft, BookOpen, Calendar, Hash, Tag, Barcode,
-  Layers, BookCopy, Library, BookText, ImageOff,
+  Layers, BookCopy, Library, 
 } from "lucide-react"
 import type { Book } from "../types/book"
 

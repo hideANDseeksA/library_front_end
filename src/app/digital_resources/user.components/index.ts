@@ -1,4 +1,4 @@
-export { BookReaderApp } from "./BookReaderApp"
+export { DigitalReaderApp } from "./BookReaderApp"
 export { BookCard } from "./BookCard"
 export { HorizontalScrollRow } from "./HorizontalScrollRow"
 export { ContinueReadingCard } from "./ContinueReadingCard"
