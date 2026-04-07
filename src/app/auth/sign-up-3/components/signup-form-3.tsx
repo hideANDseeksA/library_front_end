@@ -94,7 +94,7 @@ export function SignupForm3({
           </form>
           <div className="bg-muted relative hidden md:block">
             <img
-              src="https://ui.shadcn.com/placeholder.svg"
+              src="https://www.visiblebody.com/hubfs/Stock%20images/Students%20sitting%20at%20a%20table%20in%20a%20library%20while%20learning%20and%20working%20on%20a%20laptop-1.jpeg"
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.95] dark:invert"
             />

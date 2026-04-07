@@ -8,26 +8,26 @@ const blogs = [
     {
       id: 1,
       image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Technology',
-      title: 'AI Development Catalysts',
+      category: 'Research Tips',
+      title: 'How to Use Academic Databases Effectively',
       description:
-        'Exploring how AI-driven tools are transforming software development workflows and accelerating innovation.',
+        'A step-by-step guide to getting the most out of JSTOR, ProQuest, and EBSCOhost for your research papers and thesis writing.',
     },
     {
       id: 2,
       image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Lifestyle',
-      title: 'Minimalist Living Guide',
+      category: 'Library News',
+      title: 'New Titles Added to Our Collection This Semester',
       description:
-        'Minimalist living approaches that can help reduce stress and create more meaningful daily experiences.',
+        'Discover the latest books, journals, and reference materials recently acquired by the library across all academic departments.',
     },
     {
       id: 3,
       image: 'https://ui.shadcn.com/placeholder.svg',
-      category: 'Design',
-      title: 'Accessible UI Trends',
+      category: 'Study Skills',
+      title: 'Citing Your Sources: APA, MLA, and Chicago Styles',
       description:
-        'How modern UI trends are embracing accessibility while maintaining sleek, intuitive user experiences.',
+        'A practical overview of the most commonly used citation formats to help you avoid plagiarism and write with academic integrity.',
     },
   ]
 
@@ -37,12 +37,12 @@ export function BlogSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
-          <Badge variant="outline" className="mb-4">Latest Insights</Badge>
+          <Badge variant="outline" className="mb-4">Library Updates</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            From our blog
+            News & Resources
           </h2>
           <p className="text-lg text-muted-foreground">
-            Stay updated with the latest trends, best practices, and insights from our team of experts.
+            Stay informed with the latest library announcements, research guides, and study tips from our librarians.
           </p>
         </div>
 
@@ -77,7 +77,7 @@ export function BlogSection() {
                     onClick={e => e.preventDefault()}
                     className="inline-flex items-center gap-2 text-primary hover:underline cursor-pointer"
                   >
-                    Learn More
+                    Read More
                     <ArrowRight className="size-4" />
                   </a>
                 </div>

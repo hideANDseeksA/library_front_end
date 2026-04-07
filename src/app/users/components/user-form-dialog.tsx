@@ -1,230 +1,261 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Plus } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
+import ResponsiveForm, {
+  type FormField,
+  type FormValues,
+  type FormMode,
+} from "@/components/ReusableForm"
 
-const userFormSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  role: z.string().min(1, {
-    message: "Please select a role.",
-  }),
-  plan: z.string().min(1, {
-    message: "Please select a plan.",
-  }),
-  billing: z.string().min(1, {
-    message: "Please select a billing method.",
-  }),
-  status: z.string().min(1, {
-    message: "Please select a status.",
-  }),
-})
+import {
+  useCreateResearch,
+  useUpdateResearch,
+  type ResearchFormData,
+} from "@/hooks/useResearch"
 
-type UserFormValues = z.infer<typeof userFormSchema>
+import { useDepartmentList } from "@/hooks/useDepartment"
+import { useCategoryList } from "@/hooks/useCategory"
 
-interface UserFormDialogProps {
-  onAddUser: (user: UserFormValues) => void
+// ─── Types ───────────────────────────────────────────────
+
+interface ResearchFormDialogProps {
+  onSuccess?: () => void
+  mode?: FormMode
+  initialData?: FormValues
+  paperId?: string
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
-export function UserFormDialog({ onAddUser }: UserFormDialogProps) {
-  const [open, setOpen] = useState(false)
+// ─── Fields ──────────────────────────────────────────────
 
-  const form = useForm<UserFormValues>({
-    resolver: zodResolver(userFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      role: "",
-      plan: "",
-      billing: "",
-      status: "",
+function buildFields(
+  departmentOptions: { label: string; value: number }[],
+  categoryOptions: { label: string; value: number }[]
+): FormField[] {
+  return [
+    { name: "title", label: "Title", type: "text", colSpan: 2, required: true },
+    { name: "keywords", label: "Keywords", type: "text", colSpan: 2 },
+    {
+      name: "department",
+      label: "Department",
+      type: "select",
+      required: true,
+      options: departmentOptions,
     },
-  })
+    {
+      name: "category",
+      label: "Category",
+      type: "select",
+      options: categoryOptions,
+    },
+    { name: "year", label: "Year", type: "number", required: true },
+    { name: "adviser", label: "Adviser", type: "text" },
+    { name: "authors", label: "Authors", type: "text", colSpan: 2 },
+    { name: "abstract", label: "Abstract", type: "textarea", colSpan: 2 },
+    { name: "best_thesis", label: "Best Thesis", type: "checkbox" },
+    {
+      name: "file",
+      label: "File (PDF)",
+      type: "file",
+      accept: "application/pdf",
+    },
+  ]
+}
 
-  function onSubmit(data: UserFormValues) {
-    onAddUser(data)
-    form.reset()
-    setOpen(false)
+// ─── Defaults ────────────────────────────────────────────
+
+const EMPTY_DEFAULTS: FormValues = {
+  title: "",
+  keywords: "",
+  department: "",
+  category: "",
+  year: "",
+  adviser: "",
+  authors: "",
+  abstract: "",
+  best_thesis: false,
+  file: null,
+}
+
+// ─── Mapper ──────────────────────────────────────────────
+
+function toPayload(values: FormValues, isUpdate = false): ResearchFormData {
+  const details: Record<string, unknown> = {}
+
+  if (values.year)     details.year     = String(values.year)
+  if (values.adviser)  details.adviser  = String(values.adviser)
+  if (values.authors)  details.authors  = String(values.authors)
+  if (values.abstract) details.abstract = String(values.abstract)
+
+  return {
+    title:      String(values.title ?? ""),
+    keywords:   values.keywords  ? String(values.keywords)  : undefined,
+    department: values.department ? String(values.department) : null,
+    category:   values.category  ? String(values.category)  : null,
+    details:    Object.keys(details).length ? details : undefined,
+    ...(isUpdate
+      ? { file: values.file instanceof File ? values.file : undefined }
+      : { file: values.file instanceof File ? values.file : null }
+    ),
   }
+}
+
+// ─── Component ───────────────────────────────────────────
+
+export function ResearchFormDialog({
+  onSuccess,
+  mode = "create",
+  initialData,
+  paperId,
+  open: controlledOpen,
+  onOpenChange,
+}: ResearchFormDialogProps) {
+  const [internalOpen, setInternalOpen] = useState(false)
+
+  const open = controlledOpen ?? internalOpen
+  const setOpen = onOpenChange ?? setInternalOpen
+
+  const { create, isLoading: creating, error } = useCreateResearch()
+  const { update, isLoading: updating } = useUpdateResearch()
+
+  const { data: departments, fetchAll: fetchDepartments } = useDepartmentList()
+  const { data: categories, fetchAll: fetchCategories } = useCategoryList()
+
+  useEffect(() => {
+    if (open) {
+      fetchDepartments()
+      fetchCategories()
+    }
+  }, [open, fetchDepartments, fetchCategories])
+
+  const departmentOptions = useMemo(
+    () => departments?.map((d) => ({ label: d.name, value: d.id })) ?? [],
+    [departments]
+  )
+
+  const categoryOptions = useMemo(
+    () => categories?.map((c) => ({ label: c.name, value: c.id })) ?? [],
+    [categories]
+  )
+
+  const fields = buildFields(departmentOptions, categoryOptions)
+
+  const isOptionsReady =
+    mode === "create" ||
+    (departmentOptions.length > 0 && categoryOptions.length > 0)
+
+  const resolvedDefaults = useMemo(() => {
+    if (mode === "create") return EMPTY_DEFAULTS
+    if (!initialData) return EMPTY_DEFAULTS
+
+    // Wait until options have loaded to avoid falling back to raw IDs
+    if (departmentOptions.length === 0 || categoryOptions.length === 0) return null
+
+    const deptMatch = departmentOptions.find(
+      (d) => d.label === initialData.department || String(d.value) === String(initialData.department)
+    )
+    const catMatch = categoryOptions.find(
+      (c) => c.label === initialData.category || String(c.value) === String(initialData.category)
+    )
+
+    const isView = mode === "view"
+
+    return {
+      ...initialData,
+      department: deptMatch
+        ? isView ? deptMatch.label : deptMatch.value
+        : initialData.department,
+      category: catMatch
+        ? isView ? catMatch.label : catMatch.value
+        : initialData.category,
+    }
+  }, [mode, initialData, departmentOptions, categoryOptions])
+
+  async function handleSubmit(values: FormValues) {
+    if (mode === "view") return
+
+    if (mode === "create") {
+      const payload = toPayload(values, false)
+      const res = await create(payload)
+      if (res.ok) {
+        onSuccess?.()
+        setOpen(false)
+      }
+    }
+
+    if (mode === "update" && paperId) {
+      const payload = toPayload(values, true)
+      const res = await update(paperId, payload)
+      if (res.ok) {
+        onSuccess?.()
+        setOpen(false)
+      }
+    }
+  }
+
+  const isLoading = creating || updating
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="cursor-pointer">
-          <Plus className="mr-2 h-4 w-4" />
-          Add New User
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl">
+      {mode === "create" && controlledOpen === undefined && (
+        <DialogTrigger asChild>
+          <Button className="cursor-pointer">
+            <Plus className="mr-2 h-4 w-4" />
+            Add Paper
+          </Button>
+        </DialogTrigger>
+      )}
+
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         <DialogHeader>
-          <DialogTitle>Add New User</DialogTitle>
+          <DialogTitle>
+            {mode === "create" && "Add Research Paper"}
+            {mode === "update" && "Edit Research Paper"}
+            {mode === "view" && "View Research Paper"}
+          </DialogTitle>
           <DialogDescription>
-            Create a new user account. Click save when you're done.
+            {mode === "create" && "Fill in the details and save."}
+            {mode === "update" && "Update the research information."}
+            {mode === "view" && "Viewing research details."}
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter full name" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter email address" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Role</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="cursor-pointer w-full">
-                          <SelectValue placeholder="Select role" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Admin">Admin</SelectItem>
-                        <SelectItem value="Author">Author</SelectItem>
-                        <SelectItem value="Editor">Editor</SelectItem>
-                        <SelectItem value="Maintainer">Maintainer</SelectItem>
-                        <SelectItem value="Subscriber">Subscriber</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="plan"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Plan</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="cursor-pointer w-full">
-                          <SelectValue placeholder="Select plan" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Basic">Basic</SelectItem>
-                        <SelectItem value="Professional">Professional</SelectItem>
-                        <SelectItem value="Enterprise">Enterprise</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="billing"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Billing</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="cursor-pointer w-full">
-                          <SelectValue placeholder="Select billing" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Auto Debit">Auto Debit</SelectItem>
-                        <SelectItem value="UPI">UPI</SelectItem>
-                        <SelectItem value="Paypal">Paypal</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Status</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="cursor-pointer w-full">
-                          <SelectValue placeholder="Select status" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="Active">Active</SelectItem>
-                        <SelectItem value="Pending">Pending</SelectItem>
-                        <SelectItem value="Error">Error</SelectItem>
-                        <SelectItem value="Inactive">Inactive</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <DialogFooter>
-              <Button type="submit" className="cursor-pointer">
-                Save User
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+
+        {error && (
+          <p className="text-sm text-destructive border p-2 rounded">
+            {error}
+          </p>
+        )}
+
+        {!isOptionsReady || (mode !== "create" && resolvedDefaults === null) ? (
+          <div className="flex items-center justify-center py-10 text-sm text-muted-foreground">
+            Loading form…
+          </div>
+        ) : (
+          <ResponsiveForm
+            key={mode === "create" ? "create" : resolvedDefaults ? "ready" : "loading"}
+            fields={fields}
+            defaultValues={resolvedDefaults ?? EMPTY_DEFAULTS}
+            onSubmit={handleSubmit}
+            submitText={
+              mode === "update"
+                ? isLoading ? "Updating..." : "Update"
+                : isLoading ? "Saving..."   : "Save"
+            }
+            mode={mode}
+            onCancel={() => setOpen(false)}
+          />
+        )}
       </DialogContent>
     </Dialog>
   )

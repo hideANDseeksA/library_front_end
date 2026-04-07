@@ -1,4 +1,4 @@
-import { BookReaderApp } from "./components/forgot-password-form-3"
+import { BookReaderApp } from "./components/BookReaderApp"
 import { BaseLayout } from "@/components/layouts/base-layout"
 export default function ForgotPassword3Page() {
   return (

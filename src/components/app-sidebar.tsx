@@ -12,9 +12,10 @@ import {
   AlertTriangle,
   Settings,
   HelpCircle,
-  CreditCard,
+  BookOpen,
   LayoutTemplate,
   Users,
+  Stamp
 } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/logo"
@@ -32,11 +33,33 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-const data = {
+import { useAuth } from "@/hooks/use-auth"
+
+
+
+
+
+
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const {user}=useAuth();
+  const roleAvatarMap: Record<string, string> = {
+  student: "identicon",   // student style
+  teacher: "persona",      // teacher style
+  librarian: "identicon",  // librarian style
+}
+
+// Pick avatar style based on user's role, fallback to student
+const avatarStyle = roleAvatarMap[user?.role || "student"]
+
+// Generate DiceBear avatar URL
+const avatar = `https://api.dicebear.com/7.x/${avatarStyle}/svg?seed=${user?.email || Math.random()}`
+
+
+  const data = {
   user: {
-    name: "ShadcnStore",
-    email: "store@example.com",
-    avatar: "",
+       name: user?.full_name || "Guest",
+    email: user?.email || "guest@example.com",
+    avatar,
   },
   navGroups: [
     {
@@ -78,6 +101,11 @@ const data = {
           icon: Calendar,
         },
         {
+          title: "digital",
+          url: "/digital-resources",
+          icon: Calendar,
+        },
+        {
           title: "Users",
           url: "/users",
           icon: Users,
@@ -85,7 +113,38 @@ const data = {
             {
           title: "Books",
           url: "/books",
+          icon: BookOpen,
+        },
+           {
+          title: "Academic Works",
+          url: "/research",
+          icon: Stamp,
+        },
+      ],
+    },
+      {
+      label: "Management",
+      items: [
+     
+        {
+          title: "digital",
+          url: "/digital-resources/admin",
+          icon: Calendar,
+        },
+        {
+          title: "Users",
+          url: "/users",
           icon: Users,
+        },
+            {
+          title: "Books",
+          url: "/books/admin",
+          icon: BookOpen,
+        },
+           {
+          title: "Academic Works",
+          url: "/users",
+          icon: Stamp,
         },
       ],
     },
@@ -209,8 +268,6 @@ const data = {
     },
   ],
 }
-
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar {...props}>
       <SidebarHeader>

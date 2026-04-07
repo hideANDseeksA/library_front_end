@@ -18,6 +18,14 @@ const Pricing = lazy(() => import('@/app/pricing/page'))
 
 const Books = lazy(() => import('@/app/books/page'))
 
+const Research  = lazy(() => import('@/app/research_repository/page'))
+
+const DigitalResource = lazy(() => import('@/app/digital_resources/page'))
+
+const BooksAdmin = lazy(() => import('@/app/books/admin.page'))
+
+const DigitalResources = lazy(() => import('@/app/digital_resources/user.page'))
+
 // Auth pages
 const SignIn = lazy(() => import('@/app/auth/sign-in/page'))
 const SignIn2 = lazy(() => import('@/app/auth/sign-in-2/page'))
@@ -65,6 +73,25 @@ export const routes: RouteConfig[] = [
  {
     path: "/books",
     element: <Books />
+  },
+  {
+    path: "/books/admin",
+    element: <BooksAdmin />
+  },
+   {
+    path: "/research",
+    element: <Research />
+  },
+
+    {
+    path: "/digital-resources",
+    element: <DigitalResources />
+  },
+
+  
+    {
+    path: "/digital-resources/admin",
+    element: <DigitalResource />
   },
   // Dashboard Routes
   {

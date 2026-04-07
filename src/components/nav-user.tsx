@@ -9,7 +9,7 @@ import {
 } from "lucide-react"
 import { Link } from "react-router-dom"
 
-import { Logo } from "@/components/logo"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,7 +25,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-
+import { useAuth } from "@/hooks/use-auth"
+import { useNavigate } from "react-router-dom"
 export function NavUser({
   user,
 }: {
@@ -36,7 +37,8 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-
+  const { logout, isLoading } = useAuth()
+  const navigate = useNavigate()
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -46,10 +48,13 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg">
-                < Logo size={28} />
-              </div>
-              <div className="grid flex-1 text-left text-sm leading-tight">
+              {/* Role-based Avatar */}
+              <Avatar className="h-8 w-8">
+                <AvatarImage src={user.avatar} />
+                <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+              </Avatar>
+
+              <div className="grid flex-1 text-left text-sm leading-tight ml-2">
                 <span className="truncate font-medium">{user.name}</span>
                 <span className="text-muted-foreground truncate text-xs">
                   {user.email}
@@ -58,6 +63,7 @@ export function NavUser({
               <EllipsisVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
@@ -66,9 +72,10 @@ export function NavUser({
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <div className="h-8 w-8 rounded-lg">
-                  < Logo size={28} />
-                </div>
+                <Avatar className="h-8 w-8">
+                  <AvatarImage src={user.avatar} />
+                  <AvatarFallback>{user.name.slice(0, 2).toUpperCase()}</AvatarFallback>
+                </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
                   <span className="text-muted-foreground truncate text-xs">
@@ -77,7 +84,9 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
+
             <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem asChild className="cursor-pointer">
                 <Link to="/settings/account">
@@ -98,12 +107,22 @@ export function NavUser({
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link to="/sign-in">
-                <LogOut />
-                Log out
-              </Link>
+
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={async () => {
+                try {
+                  await logout()
+                  navigate("/login") 
+                } catch (err) {
+                  console.error("Logout failed:", err)
+                }
+              }}
+            >
+              <LogOut />
+              {isLoading ? "Logging out..." : "Log out"}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

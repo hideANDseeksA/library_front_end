@@ -45,7 +45,7 @@ export default function LandingPage() {
       <LandingFooter />
 
       {/* Theme Customizer */}
-      <LandingThemeCustomizerTrigger onClick={() => setThemeCustomizerOpen(true)} />
+    
       <LandingThemeCustomizer
         open={themeCustomizerOpen}
         onOpenChange={setThemeCustomizerOpen}

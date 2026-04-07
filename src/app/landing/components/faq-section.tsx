@@ -14,39 +14,39 @@ type FaqItem = {
 const faqItems: FaqItem[] = [
   {
     value: 'item-1',
-    question: 'How do I integrate ShadcnStore components into my project?',
+    question: 'How do I register for a library account?',
     answer:
-      'Integration is simple! All our components are built with shadcn/ui and work with React, Next.js, and Vite. Just copy the component code, install any required dependencies, and paste it into your project. Each component comes with detailed installation instructions and examples.',
+      'All currently enrolled students, faculty, and staff are automatically registered in the library system. Simply present your valid school ID at the circulation desk to activate your account. You can also log in to the online library portal using your institutional email and student/employee ID number to access digital resources.',
   },
   {
     value: 'item-2',
-    question: 'What\'s the difference between free and premium components?',
+    question: 'How many books can I borrow and for how long?',
     answer:
-      'Free components include essential UI elements like buttons, forms, and basic layouts. Premium components offer advanced features like complex data tables, analytics dashboards, authentication flows, and complete admin templates. Premium also includes Figma files, priority support, and commercial licenses.',
+      'Undergraduate students may borrow up to 3 books at a time for a loan period of 7 days. Graduate students and faculty may borrow up to 5 books for up to 14 days. Reference materials, theses, and special collections are for room use only and cannot be taken out of the library premises.',
   },
   {
     value: 'item-3',
-    question: 'Can I use these components in commercial projects?',
+    question: 'How do I renew or reserve a book?',
     answer:
-      'Yes! Free components come with an MIT license for unlimited use. Premium components include a commercial license that allows usage in client projects, SaaS applications, and commercial products without attribution requirements.',
+      'Books can be renewed once online through the library portal, via phone, or in person at the circulation desk — provided no other patron has placed a hold on the item. To reserve a book currently on loan, log in to the library system, search for the title, and click "Place a Hold." You will be notified via email when the book is ready for pickup.',
   },
   {
     value: 'item-4',
-    question: 'Do you provide support and updates?',
+    question: 'What are the penalties for overdue or lost books?',
     answer:
-      'Absolutely! We provide community support for free components through our Discord server and GitHub issues. Premium subscribers get priority email support, regular component updates, and early access to new releases. We also maintain compatibility with the latest shadcn/ui versions.',
+      'Overdue books are charged a fine of ₱5.00 per day per item. Lost or damaged books must be replaced with the same edition or a newer one, or the borrower may pay the current market value plus a processing fee of ₱50.00. Unpaid fines or unreturned materials will result in a hold on your school records, including enrollment and graduation clearance.',
   },
   {
     value: 'item-5',
-    question: 'What frameworks and tools do you support?',
+    question: 'Can I access library resources online?',
     answer:
-      'Our components work with React 18+, Next.js 13+, and Vite. We use TypeScript, Tailwind CSS, and follow shadcn/ui conventions. Components are tested with popular tools like React Hook Form, TanStack Query, and Zustand for state management.',
+      'Yes! The library provides 24/7 access to a range of digital resources including e-books, academic journals, and research databases such as JSTOR, ProQuest, and EBSCOhost. Log in using your institutional credentials through the library portal. Off-campus access is available via VPN. Contact the reference desk for assistance with database access.',
   },
   {
     value: 'item-6',
-    question: 'How often do you release new components?',
+    question: 'How do I request a book or resource that is not in the collection?',
     answer:
-      'We release new components and templates weekly. Premium subscribers get early access to new releases, while free components are updated regularly based on community feedback. You can track our roadmap and request specific components through our GitHub repository.',
+      'You may submit a book purchase request through the library portal or by filling out a request form at the reference desk. Faculty members may also recommend titles for acquisition by contacting the librarian directly. For urgent research needs, the library also offers an inter-library loan (ILL) service that allows borrowing materials from partner institutions.',
   },
 ]
 
@@ -61,7 +61,7 @@ const FaqSection = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted-foreground">
-            Everything you need to know about ShadcnStore components, licensing, and integration. Still have questions? We're here to help!
+            Everything you need to know about borrowing, returning, accessing resources, and using the college library system. Still have questions? Our librarians are ready to assist!
           </p>
         </div>
 
@@ -90,11 +90,11 @@ const FaqSection = () => {
           {/* Contact Support CTA */}
           <div className="text-center mt-12">
             <p className="text-muted-foreground mb-4">
-              Still have questions? We're here to help.
+              Still have questions? Our library staff are happy to help.
             </p>
             <Button className='cursor-pointer' asChild>
               <a href="#contact">
-                Contact Support
+                Contact the Library
               </a>
             </Button>
           </div>

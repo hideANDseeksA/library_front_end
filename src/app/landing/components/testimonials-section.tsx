@@ -13,83 +13,83 @@ type Testimonial = {
 
 const testimonials: Testimonial[] = [
   {
-    name: 'Alexandra Mitchell',
-    role: 'Senior Frontend Developer',
+    name: 'Angela Reyes',
+    role: 'BS Nursing, 3rd Year',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-1',
     quote:
-      'This platform has completely transformed our development workflow. The component system is so well-architected that even complex applications feel simple to build.',
+      'The library has been my second home throughout college. The nursing references and medical journals available here are incredibly up-to-date, and the staff always help me find exactly what I need for my case studies.',
   },
   {
-    name: 'James Thompson',
-    role: 'Technical Lead',
+    name: 'Marco Santiago',
+    role: 'BS Computer Science, 4th Year',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-1',
-    quote: 'After trying countless frameworks, this is the one that finally clicked. The documentation is exceptional.',
+    quote: 'The online database access is a game changer. I can access research papers and e-books even off-campus. Highly recommend setting up your library account early.',
   },
   {
-    name: 'Priya Sharma',
-    role: 'Product Designer',
+    name: 'Isabelle Cruz',
+    role: 'AB Communication, 2nd Year',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-2',
     quote:
-      'The design system is beautiful and consistent. I can prototype ideas quickly and hand them off to developers with confidence that the implementation will match perfectly.',
+      "I love the quiet study rooms — they're perfect for group work and thesis writing. The librarians are also very approachable and always willing to guide you on how to properly cite your sources.",
   },
   {
-    name: 'Robert Kim',
-    role: 'Engineering Manager',
+    name: 'Rafael Domingo',
+    role: 'College Librarian',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-2',
     quote:
-      'We migrated our entire application to this platform in just two weeks. The performance improvements were immediate.',
+      'Our goal has always been to make the library a welcoming and resource-rich environment. With the new library system, processing borrowings and managing reservations has become significantly faster and more efficient.',
   },
   {
-    name: 'Maria Santos',
-    role: 'Full Stack Engineer',
+    name: 'Camille Flores',
+    role: 'MA Education, Graduate Student',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-3',
     quote:
-      'The accessibility features are top-notch. Building inclusive applications has never been easier. Every component follows best practices out of the box, and the automated testing suite ensures we maintain high accessibility standards throughout our development process.',
+      "As a graduate student, I rely heavily on the library for thesis research. The inter-library loan service has been invaluable — I've accessed materials from partner universities that I wouldn't have found anywhere else. The reference librarians are genuinely knowledgeable and patient.",
   },
   {
-    name: 'Thomas Anderson',
-    role: 'Solutions Architect',
+    name: 'Jerome Villanueva',
+    role: 'BS Accountancy, 3rd Year',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-3',
-    quote: 'Scalability was our biggest concern, but this platform handles enterprise-level complexity with ease.',
+    quote: "The library's online renewal system saves me so much time. I no longer have to rush back to campus just to extend my borrowed books during exam season.",
   },
   {
-    name: 'Lisa Chang',
-    role: 'UX Researcher',
+    name: 'Patricia Lim',
+    role: 'Faculty, Department of English',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-4',
     quote:
-      'User testing results have been consistently positive since we adopted this platform. The user experience is intuitive and the performance is stellar. Our user satisfaction scores have increased by 40% since the migration.',
+      "I regularly recommend the library to my students for research purposes. The journal subscriptions and digital archives have grown substantially over the past few years. My students' research papers have noticeably improved in quality since they started using the library databases.",
   },
   {
-    name: 'Michael Foster',
-    role: 'DevOps Engineer',
+    name: 'Kevin Tan',
+    role: 'BS Architecture, 4th Year',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-4',
-    quote: 'Deployment and maintenance are a breeze. The platform integrates seamlessly with our CI/CD pipeline.',
+    quote: 'The architecture and design section is well-curated. I always find relevant references for my studio projects. The large-format printing service nearby is also a huge bonus.',
   },
   {
-    name: 'Sophie Laurent',
-    role: 'Creative Director',
+    name: 'Sophia Mendez',
+    role: 'BS Psychology, 1st Year',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-5',
     quote:
-      'The creative possibilities are endless. We can bring any design concept to life without compromising on technical quality or user experience.',
+      'As a freshman, I was intimidated at first, but the library orientation really helped me understand how everything works. The staff were so patient in walking me through the catalog system and showing me where the psychology section is.',
   },
   {
-    name: 'Daniel Wilson',
-    role: 'Backend Developer',
+    name: 'Adrian Bautista',
+    role: 'Student Council President',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-5',
-    quote: 'The API design is exceptional. Clean, intuitive, and well-documented.',
+    quote: 'The library is central to student life here. The study spaces, printing facilities, and helpful staff make it one of the most important resources on campus.',
   },
   {
-    name: 'Natasha Petrov',
-    role: 'Mobile App Developer',
+    name: 'Tricia Gonzales',
+    role: 'BS Education, 4th Year',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=female-6',
     quote:
-      'Cross-platform development has never been this efficient. One codebase, multiple platforms, consistent user experience. This is the future. The responsive design system ensures our apps look perfect on every device.',
+      "For my teaching practicum, the library's collection of lesson plan references and educational psychology books was a lifesaver. Being able to reserve books online and pick them up the next day made my busy schedule so much more manageable.",
   },
   {
-    name: 'Carlos Rivera',
-    role: 'Startup Founder',
+    name: 'Luis Manalo',
+    role: 'BS Civil Engineering, 2nd Year',
     image: 'https://notion-avatars.netlify.app/api/avatar?preset=male-6',
-    quote: 'As a non-technical founder, this platform gave me the confidence to build our MVP quickly.',
+    quote: 'The technical references for engineering are solid. I found textbooks here that were too expensive to buy. The library truly makes quality education more accessible.',
   },
 ]
 
@@ -101,10 +101,10 @@ export function TestimonialsSection() {
         <div className="mx-auto max-w-2xl text-center mb-16">
           <Badge variant="outline" className="mb-4">Testimonials</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Empowering Innovation Worldwide
+            Voices from Our Library Community
           </h2>
           <p className="text-lg text-muted-foreground">
-            Join thousands of developers and teams who trust our platform to build exceptional digital experiences.
+            Hear from students, faculty, and staff who rely on our college library every day to learn, research, and grow.
           </p>
         </div>
 

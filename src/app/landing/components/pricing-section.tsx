@@ -8,56 +8,60 @@ import { useState } from 'react'
 
 const plans = [
   {
-    name: 'Free',
-    description: 'Perfect for getting started with essential components',
+    name: 'Nursing Library',
+    description: 'Dedicated resources for nursing students and healthcare professionals',
     monthlyPrice: 0,
     yearlyPrice: 0,
     features: [
-      'Access to 50+ free components',
-      'Basic dashboard templates',
-      'Community support',
-      'GitHub repository access',
-      'Documentation and guides'
+      'Access to nursing journals & e-books',
+      'Clinical reference databases',
+      'Health sciences periodicals',
+      'Study rooms & quiet zones',
+      'Printing & scanning services',
+      'Community peer support'
     ],
-    cta: 'Get Started',
-    popular: false
+    cta: 'Access Now',
+    popular: false,
+  
   },
   {
-    name: 'Pro',
-    description: 'For developers who need premium templates and components',
+    name: 'Graduate Library',
+    description: 'Advanced collections for graduate students and research programs',
     monthlyPrice: 19,
     yearlyPrice: 15,
     features: [
-      'Premium template collection',
-      'Advanced dashboard layouts',
-      'Priority support',
-      'Commercial use license',
-      'Early access to new releases',
-      'Figma design files',
-      'Custom component requests',
-      'Direct developer access',
-      'Exclusive design resources'
+      'Full research database suite',
+      'Thesis & dissertation archives',
+      'Interlibrary loan services',
+      'Graduate study carrels',
+      'Statistical software access',
+      'Citation management tools',
+      'Research consultation sessions',
+      'Extended borrowing privileges',
+      'Remote access to all e-resources'
     ],
-    cta: 'Get Started',
+    cta: 'Access Now',
     popular: true,
-    includesPrevious: 'All Free features, plus'
+    includesPrevious: 'All Nursing Library access, plus',
+
   },
   {
-    name: 'Lifetime',
-    description: 'One-time payment for lifetime access to everything',
+    name: 'Main Library',
+    description: 'The central hub — full access to every collection and service on campus',
     monthlyPrice: 299,
     yearlyPrice: 299,
     features: [
-      'Lifetime updates and support',
-      'Private Discord channel',
-      'No recurring fees ever',
-      'Future template access',
-      'VIP support priority',
-      'Exclusive beta features'
+      'Unlimited borrowing across all branches',
+      'Special collections & rare books',
+      'Multimedia production lab',
+      'Faculty priority services',
+      'Archival & manuscript access',
+      '24/7 digital resource access'
     ],
-    cta: 'Get Started',
+    cta: 'Access Now',
     popular: false,
-    includesPrevious: 'All Pro features, plus'
+    includesPrevious: 'All Graduate Library access, plus',
+   
   }
 ]
 
@@ -69,12 +73,12 @@ export function PricingSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-12">
-          <Badge variant="outline" className="mb-4">Pricing Plans</Badge>
+          <Badge variant="outline" className="mb-4">Our Libraries</Badge>
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-            Choose your plan
+            Choose your library
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            Start building with our free components or upgrade to Pro for access to premium templates and advanced features.
+            From specialized nursing resources to graduate research tools and our flagship main branch — find the library that fits your academic journey.
           </p>
 
           {/* Billing Toggle */}
@@ -89,23 +93,23 @@ export function PricingSection() {
                 value="monthly"
                 className="data-[state=on]:bg-background data-[state=on]:border-border border-transparent border px-6 !rounded-full data-[state=on]:text-foreground hover:bg-transparent cursor-pointer transition-colors"
               >
-                Monthly
+                Semester
               </ToggleGroupItem>
               <ToggleGroupItem
                 value="yearly"
                 className="data-[state=on]:bg-background data-[state=on]:border-border border-transparent border px-6 !rounded-full data-[state=on]:text-foreground hover:bg-transparent cursor-pointer transition-colors"
               >
-                Annually
+                Annual
               </ToggleGroupItem>
             </ToggleGroup>
           </div>
 
           <p className="text-sm text-muted-foreground">
-            <span className="text-primary font-semibold">Save 20%</span> On Annual Billing
+            <span className="text-primary font-semibold">Save 20%</span> on Annual Membership
           </p>
         </div>
 
-        {/* Pricing Cards */}
+        {/* Library Cards */}
         <div className="mx-auto max-w-6xl">
           <div className="rounded-xl border">
             <div className="grid lg:grid-cols-3">
@@ -120,23 +124,22 @@ export function PricingSection() {
                 >
                   {/* Plan Header */}
                   <div>
+        
                     <div className="text-lg font-medium tracking-tight mb-2">{plan.name}</div>
                     <div className="text-muted-foreground text-balance text-sm">{plan.description}</div>
                   </div>
 
-                  {/* Pricing */}
+                  {/* Membership Tag */}
                   <div>
                     <div className="text-4xl font-bold mb-1">
-                      {plan.name === 'Lifetime' ? (
-                        `$${plan.monthlyPrice}`
-                      ) : plan.name === 'Free' ? (
-                        '$0'
-                      ) : (
-                        `$${isYearly ? plan.yearlyPrice : plan.monthlyPrice}`
-                      )}
+                      {index === 0 ? 'Open Access' : index === 1 ? 'Graduate' : 'Full Access'}
                     </div>
                     <div className="text-muted-foreground text-sm">
-                      {plan.name === 'Lifetime' ? 'One-time payment' : 'Per month'}
+                      {index === 0
+                        ? 'Free for all enrolled students'
+                        : index === 1
+                        ? 'For graduate students & researchers'
+                        : 'University-wide membership'}
                     </div>
                   </div>
 
@@ -176,13 +179,13 @@ export function PricingSection() {
           </div>
         </div>
 
-        {/* Enterprise Note */}
+        {/* Footer Note */}
         <div className="mt-16 text-center">
           <p className="text-muted-foreground">
-            Need custom components or have questions? {' '}
+            Need library assistance or have questions?{' '}
             <Button variant="link" className="p-0 h-auto cursor-pointer" asChild>
               <a href="#contact">
-                Contact our team
+                Contact our library team
               </a>
             </Button>
           </p>
